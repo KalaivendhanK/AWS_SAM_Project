@@ -1,0 +1,20 @@
+version: '3.7'
+services:
+  localstack:
+    image: localstack/localstack
+    container_name: localstack_service
+    network_mode: bridge
+    ports:
+      - "127.0.0.1:4566:4566"
+      - "127.0.0.1:4590:4590"
+      - "127.0.0.1:4581:4581"
+    environment:
+      - SERVICES=s3,cloudformation,lambda,apigateway,dynamodb,secretsmanager
+      - DEBUG=1
+      - DATA_DIR=./tmp/localstack/data
+    volumes:
+      - ./tmp/localstack:/tmp/localstack
+      - /var/run/docker.sock:/var/run/docker.sock
+networks:
+  default:
+    name: mock_demo
